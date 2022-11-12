@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 
-// testing pushing to github
-
 public class InstantiateItems : MonoBehaviour
 {
     [SerializeField] public GameObject deskToSpawn;
@@ -27,7 +25,6 @@ public class InstantiateItems : MonoBehaviour
     }
 
     int counter = 0;
-    int limit = 6;
 
     public static List<ShopManager.ItemsData> itemData;
 
@@ -37,9 +34,6 @@ public class InstantiateItems : MonoBehaviour
     GameObject objPointer;
 
     bool isCreating = false;
-
-    int increment = 0;
-
 
     void Start()
     {
