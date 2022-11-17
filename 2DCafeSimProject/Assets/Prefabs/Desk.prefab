@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2346589999276519160}
   - component: {fileID: -8086164604911814048}
   - component: {fileID: 5506782223385979062}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Desk
   m_TagString: Desk
   m_Icon: {fileID: 0}
@@ -125,11 +125,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1106343759a42b9419404821bcf89782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HasSpawned: 0
-  HasBeenPlaced: 0
   prefabTransform: {fileID: 0}
   marker: {fileID: 0}
   map: {fileID: 0}
+  HasSpawned: 0
+  HasBeenPlaced: 0
 --- !u!50 &5506782223385979062
 Rigidbody2D:
   serializedVersion: 4

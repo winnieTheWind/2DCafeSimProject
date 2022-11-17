@@ -37,6 +37,8 @@ public class ShopManager : MonoBehaviour
         public List<ItemsData> itemData;
     }
 
+
+
     private void OnEnable()
     {
         ItemButtonHandler.HandleItemQuantity += HandleItemQuantity;
@@ -52,41 +54,55 @@ public class ShopManager : MonoBehaviour
     private void HandleItemQuantity(GameObject obj)
     {
         string columnSelected = obj.transform.parent.GetComponentInChildren<TextMeshProUGUI>().text;
+        Debug.Log(columnSelected);
+        SetMinusPlus(obj, columnSelected, furnitureShopItemsSO);
+        SetMinusPlus(obj, columnSelected, equipmentShopItemsSO);
+
+    }
+
+    private void SetMinusPlus(GameObject obj, string columnSelected, ShopItemSO[] typeShopItemsSO)
+    {
         if (obj.GetComponentInChildren<TextMeshProUGUI>().text == "+")
         {
-            for (int i = 0; i < furnitureShopItemsSO.Length; i++)
+            for (int i = 0; i < typeShopItemsSO.Length; i++)
             {
-                if (furnitureShopItemsSO[i].name == columnSelected)
+                if (typeShopItemsSO[i].name == columnSelected)
                 {
-                    furnitureShopItemsSO[i].quantityToBuy = furnitureShopItemsSO[i].quantityToBuy + 1;
+                    typeShopItemsSO[i].quantityToBuy = typeShopItemsSO[i].quantityToBuy + 1;
                 }
             }
         }
         else if (obj.GetComponentInChildren<TextMeshProUGUI>().text == "-")
         {
-            for (int i = 0; i < furnitureShopItemsSO.Length; i++)
+            for (int i = 0; i < typeShopItemsSO.Length; i++)
             {
 
-                if (furnitureShopItemsSO[i].name == columnSelected)
+                if (typeShopItemsSO[i].name == columnSelected)
                 {
-                    if (furnitureShopItemsSO[i].quantityToBuy == 0)
+                    if (typeShopItemsSO[i].quantityToBuy == 0)
                     {
-                        furnitureShopItemsSO[i].quantityToBuy = 0;
+                        typeShopItemsSO[i].quantityToBuy = 0;
                     }
                     else
                     {
-                        furnitureShopItemsSO[i].quantityToBuy = furnitureShopItemsSO[i].quantityToBuy - 1;
+                        typeShopItemsSO[i].quantityToBuy = typeShopItemsSO[i].quantityToBuy - 1;
 
                     }
                 }
             }
         }
     }
+
     void Start()
     {
         for (int i = 0; i < furnitureShopItemsSO.Length; i++)
         {
             furnitureShopItemsSO[i].quantityToBuy = 0;
+        }
+
+        for (int i = 0; i < equipmentShopItemsSO.Length; i++)
+        {
+            equipmentShopItemsSO[i].quantityToBuy = 0;
         }
 
         selectionTypeTextMesh = selectionTypeText.GetComponent<TextMeshProUGUI>();
@@ -103,12 +119,28 @@ public class ShopManager : MonoBehaviour
             furnitureScrollView.SetActive(true);
             selectionTypeTextMesh.text = "Furniture";
 
+            for (int i = 0; i < furnitureShopItemsSO.Length; i++) {
+                furnitureShopItemsSO[i].quantityToBuy = 0;
+            }
+
+            for (int i = 0; i < equipmentShopItemsSO.Length; i++) {
+                equipmentShopItemsSO[i].quantityToBuy = 0;
+            }
+
         });
         equipmentSelectionButton.GetComponent<Button>().onClick.AddListener(() =>
         {
             equipmentScrollView.SetActive(true);
             furnitureScrollView.SetActive(false);
             selectionTypeTextMesh.text = "Equipment";
+
+            for (int i = 0; i < furnitureShopItemsSO.Length; i++) {
+                furnitureShopItemsSO[i].quantityToBuy = 0;
+            }
+
+            for (int i = 0; i < equipmentShopItemsSO.Length; i++) {
+                equipmentShopItemsSO[i].quantityToBuy = 0;
+            }
         });
     }
 
@@ -127,6 +159,8 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < equipmentShopItemsSO.Length; i++)
         {
             equipmentShopPanels[i].tileTxt.text = equipmentShopItemsSO[i].name;
+            equipmentShopPanels[i].quantityTxt.text = equipmentShopItemsSO[i].quantityToBuy.ToString();
+
         }
     }
 
@@ -142,25 +176,29 @@ public class ShopManager : MonoBehaviour
     public void PurchaseItems(object sender, EventArgs args)
     {
         purchaseItemlist.Clear();
+        SetItems(furnitureShopItemsSO);
+        SetItems(equipmentShopItemsSO);
 
-        for (int i = 0; i < furnitureShopItemsSO.Length; i++)
-        {
-            if (furnitureShopItemsSO[i].quantityToBuy > 0)
-            {
-
-                ItemsData item = new ItemsData();
-                item.name = furnitureShopItemsSO[i].name;
-                item.quantity = furnitureShopItemsSO[i].quantityToBuy;
-                purchaseItemlist.Add(item);
-                purchaseItemlist.Sort(SortFunc);
-                purchaseItemlist.Reverse();
-
-            }
-        }
         SendItemsListEvent?.Invoke(this, new PurchaseItemsEventArgs { itemData = purchaseItemlist });
     }
 
-        private int SortFunc(ItemsData a, ItemsData b)
+    private void SetItems(ShopItemSO[] typeShopItemsSO)
+    {
+        for (int i = 0; i < typeShopItemsSO.Length; i++)
+        {
+            if (typeShopItemsSO[i].quantityToBuy > 0)
+            {
+                ItemsData item = new ItemsData();
+                item.name = typeShopItemsSO[i].name;
+                item.quantity = typeShopItemsSO[i].quantityToBuy;
+                purchaseItemlist.Add(item);
+                purchaseItemlist.Sort(SortFunc);
+                purchaseItemlist.Reverse();
+            }
+        }
+    }
+
+    private int SortFunc(ItemsData a, ItemsData b)
     {
         if (a.quantity < b.quantity)
         {
