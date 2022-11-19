@@ -49,6 +49,10 @@ public class InstantiateItems : MonoBehaviour
 
     GameObject obj = null;
 
+    public Sprite redMarker;
+
+    private bool isColliding;
+
     void Start()
     {
         map = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
@@ -61,6 +65,7 @@ public class InstantiateItems : MonoBehaviour
         InitGrid.getPathFinderAction += GetPathFinder;
 
 
+
     }
 
     void GetPathFinder(Pathfinding _pathFinder)
@@ -70,12 +75,18 @@ public class InstantiateItems : MonoBehaviour
 
     }
 
+    void GetColliderEvent(bool _isColliding)
+    {
+        _isColliding = isColliding;
+    }
+
     private void Update()
     {
         if (isCreating == true)
         {
 
             // Debug.Log(InitGrid.pathFinder + " " + "pathfinder");
+                    BeaconBehaviour.CollidingWithWallEvent += GetColliderEvent;
 
             StartCreation(itemData, path);
             this.panel.SetActive(false);
@@ -83,6 +94,8 @@ public class InstantiateItems : MonoBehaviour
         else
         {
             this.panel.SetActive(true);
+                    BeaconBehaviour.CollidingWithWallEvent -= GetColliderEvent;
+
         }
     }
 
@@ -175,6 +188,9 @@ public class InstantiateItems : MonoBehaviour
             {
                 obj.transform.position = vec2;
             }
+                    // Debug.Log("colliding" + " " + isColliding);
+
+            // Debug.Log(BeaconBehaviour.isCollidingWithDesk);
         }
 
         if (Mouse.current.leftButton.wasPressedThisFrame == true)
@@ -196,16 +212,43 @@ public class InstantiateItems : MonoBehaviour
                 }
                 else if (itemData[0].name == "Cash Register")
                 {
-                    if (obj.GetComponent<CashRegisterBehaviour>().isCashRegisterTouchingDesk == true)
+                    if (obj.GetComponent<CashRegisterBehaviour>().IsQueueLineColliding == false)
                     {
-                        counter = counter + 1;
-
-                        if (itemData.Count > 0)
-                        {
-                            obj.GetComponent<CashRegisterBehaviour>().HasBeenPlaced = true;
-                            PlaceObject(itemData[0].name, itemData[0].quantity, itemData);
-                        }
+                        Debug.Log("placed and queue isnt colliding");
+                    } else {
+                        Debug.Log("cannot place, queue is colliding");
                     }
+                    // if (BeaconBehaviour.isCollidingWithGround == true)
+
+                    // {
+                    // Debug.Log("clicked on ground");
+                    // if (obj.GetComponent<CashRegisterBehaviour>().isCashRegisterTouchingDesk == true)
+                    // {
+                    //     if (true)
+                    //     {
+
+                    //     }
+                    //     Debug.Log("clicked on desk");
+                    //     counter = counter + 1;
+
+                    //     if (itemData.Count > 0)
+                    //     {
+                    //         obj.GetComponent<CashRegisterBehaviour>().HasBeenPlaced = true;
+                    //         PlaceObject(itemData[0].name, itemData[0].quantity, itemData);
+                    //     }
+                    // }
+                    // }
+
+                    //         if (BeaconBehaviour.isCollidingWithDesk == false)
+                    //         {
+
+
+                    //     //     } else {
+                    //     //         // obj.GetComponent<CashRegisterBehaviour>().beaconObject.GetComponent<SpriteRenderer>().sprite = redMarker;
+                    //         }
+
+                    // }
+                    // }
                 }
             }
         }

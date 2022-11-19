@@ -12,30 +12,28 @@ public class CashRegisterBehaviour : MonoBehaviour
     public Sprite FacingRightCashRegister;
     public Sprite FacingDownCashRegister;
     public Sprite FacingLeftCashRegister;
-
-    public bool HasSpawned = false;
-    public bool HasBeenPlaced = false;
     public GameObject prefabTransform;
 
     public GameObject marker;
 
-    public List<PathNode> path;
+    public bool HasSpawned = false;
+    public bool HasBeenPlaced = false;
+    public bool timerIsRunning;
+    public bool IsQueueLineColliding = false;
+    public bool isCashRegisterTouchingDesk;
 
+    public List<PathNode> path;
     public Tilemap map;
 
     Vector3 lastPos;
 
-    float pressTime = 1;
-    public bool timerIsRunning;
+
     public static Action<GameObject> ActionEvent;
 
     public static Action<List<PathNode>> PathEvent;
 
-
-
     private Vector3 startPoint;
     private Vector3 endPoint;
-    public bool isCashRegisterTouchingDesk;
 
     GameObject wallTilemapObject;
     Tilemap tilemap;
@@ -45,6 +43,10 @@ public class CashRegisterBehaviour : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     Pathfinding pathFinder;
+
+    [SerializeField] private LayerMask layerMask;
+
+
 
     void Start()
     {
@@ -57,6 +59,7 @@ public class CashRegisterBehaviour : MonoBehaviour
         timerIsRunning = true;
 
         InitGrid.getPathFinderAction += GetPathFinder;
+
     }
 
     void GetPathFinder(Pathfinding _pathFinder)
@@ -86,20 +89,41 @@ public class CashRegisterBehaviour : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
 
+    }
 
     void Update()
     {
+
+
+
+
         SetDisableTiles("Grid/Walls");
         SetDisableTiles("Grid/Background");
 
         Vector3Int cashRegisterWToC = map.WorldToCell(new Vector2(transform.position.x, transform.position.y));
+        Vector3Int crOffset = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y - 1, 0));
+        Vector3 crOffsetVec = map.GetCellCenterWorld(crOffset);
+
+        Vector3Int crOffset1 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 1, 0));
+        Vector3 crOffsetVec1 = map.GetCellCenterWorld(crOffset1);
+
+        Vector3Int crOffset2 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 2, 0));
+        Vector3 crOffsetVec2 = map.GetCellCenterWorld(crOffset2);
+
+        Vector3Int crOffset3 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 3, 0));
+        Vector3 crOffsetVec3 = map.GetCellCenterWorld(crOffset3);
+
+        Vector3Int crOffset4 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 4, 0));
+        Vector3 crOffsetVec4 = map.GetCellCenterWorld(crOffset4);
 
         path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
 
         if (path != null)
         {
-            
+
 
             for (int i = 0; i < path.Count - 1; i++)
             {
@@ -139,6 +163,18 @@ public class CashRegisterBehaviour : MonoBehaviour
             pathFinder.GetNode(newPos9.x, newPos9.y).SetIsWalkable(false);
             pathFinder.GetNode(newPos10.x, newPos10.y).SetIsWalkable(false);
         }
+        else
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up * 4f, 4f, layerMask);
+            Debug.DrawRay(transform.position, Vector2.up * 4f, Color.red);
+            if (hit.collider != null)
+            {
+                IsQueueLineColliding = true;
+
+            } else {
+                IsQueueLineColliding = false;
+            }
+        }
 
     }
 
@@ -146,11 +182,20 @@ public class CashRegisterBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        isCashRegisterTouchingDesk = true;
+        if (other.gameObject.name == "Desk(Clone)")
+        {
+            isCashRegisterTouchingDesk = true;
+
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        isCashRegisterTouchingDesk = false;
+        if (other.gameObject.name == "Desk(Clone)")
+        {
+            isCashRegisterTouchingDesk = false;
+            // isCashRegisterTouchingDesk = true;
+
+        }
     }
 }

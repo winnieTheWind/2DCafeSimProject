@@ -17,23 +17,36 @@ public class CustomerCashRegisterState : CustomerBaseState
     }
     public override void UpdateState(CustomerStateManager customer)
     {
-            customerBehaviour = customer.GetComponent<CustomerBehaviour>();
-            cashRegisterObject = customer.GetComponent<CustomerBehaviour>().cashRegisterObj;
+        customerBehaviour = customer.GetComponent<CustomerBehaviour>();
+        cashRegisterObject = customer.GetComponent<CustomerBehaviour>().cashRegisterObj;
+        if (cashRegisterObject != null)
+        {
             crBehaviour = cashRegisterObject.GetComponent<CashRegisterBehaviour>();
 
-            Vector3Int pathTiles = new Vector3Int(crBehaviour.path[customerBehaviour.yIndex + 2].x, crBehaviour.path[customerBehaviour.yIndex + 2].y, 0);
-            // {
-            Vector3 tileToWorld = customerBehaviour.map.CellToWorld(pathTiles);
+            if (crBehaviour.path != null)
+            {
 
-            Vector3 crPosition = tileToWorld;
-            Vector3Int crWToC = customerBehaviour.map.WorldToCell(crPosition);
+                Vector3Int pathTiles = new Vector3Int(crBehaviour.path[customerBehaviour.yIndex + 2].x, crBehaviour.path[customerBehaviour.yIndex + 2].y, 0);
+                // {
+                Vector3 tileToWorld = customerBehaviour.map.CellToWorld(pathTiles);
 
-            Vector3Int offsetted = new Vector3Int(crWToC.x, crWToC.y);
+                Vector3 crPosition = tileToWorld;
+                Vector3Int crWToC = customerBehaviour.map.WorldToCell(crPosition);
 
-            Vector3 centerCashRegisterObj = customerBehaviour.map.GetCellCenterWorld(offsetted);
+                Vector3Int offsetted = new Vector3Int(crWToC.x, crWToC.y);
 
-            customerBehaviour.setTarget(centerCashRegisterObj);
-            customerBehaviour.SetAgentPosition();
+                Vector3 centerCashRegisterObj = customerBehaviour.map.GetCellCenterWorld(offsetted);
+
+                customerBehaviour.setTarget(centerCashRegisterObj);
+                customerBehaviour.SetAgentPosition();
+
+            }
+
+        }
+        else
+        {
+            return;
+        }
 
     }
 }
