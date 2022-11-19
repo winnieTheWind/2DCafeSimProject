@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class BuyButtonHandler : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class BuyButtonHandler : MonoBehaviour
     public GameObject equipmentButton;
     public GameObject furniturePanel;
     public GameObject closeShopButton;
+
+    public GameObject sellButton;
+
 
     void Start() {
         furnitureButton.SetActive(false);
@@ -23,7 +28,8 @@ public class BuyButtonHandler : MonoBehaviour
         furniturePanel.SetActive(true);
         closeShopButton.SetActive(true);
 
+        sellButton.GetComponent<Button>().enabled = false;
+        sellButton.GetComponent<Image>().color = new Vector4(1f,1f,1f,0.5f);
 
-        Debug.Log("clicked on buy button");
     }
 }

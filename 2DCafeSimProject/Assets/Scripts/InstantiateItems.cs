@@ -172,8 +172,22 @@ public class InstantiateItems : MonoBehaviour
             if (obj != null)
             {
                 obj.transform.position = vec2;
+
+                // if (Keyboard.current.eKey.wasPressedThisFrame == true)
+                // {
+                //     Debug.Log("exit placement");
+                //     // obj.gameObject.destrit
+                //     Destroy(obj);
+                //     counter = 0;
+                //     isCreating = false;
+
+                // }
             }
+
+
         }
+
+
 
         if (Mouse.current.leftButton.wasPressedThisFrame == true)
         {

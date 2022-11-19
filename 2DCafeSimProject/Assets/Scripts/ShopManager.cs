@@ -54,7 +54,6 @@ public class ShopManager : MonoBehaviour
     private void HandleItemQuantity(GameObject obj)
     {
         string columnSelected = obj.transform.parent.GetComponentInChildren<TextMeshProUGUI>().text;
-        Debug.Log(columnSelected);
         SetMinusPlus(obj, columnSelected, furnitureShopItemsSO);
         SetMinusPlus(obj, columnSelected, equipmentShopItemsSO);
 

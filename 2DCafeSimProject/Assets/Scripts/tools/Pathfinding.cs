@@ -35,6 +35,7 @@ public class Pathfinding
 
         List<PathNode> path = FindPath(startX, startY, endX, endY);
         if (path == null) {
+
             return null;
         } else {
             List<Vector3> vectorPath = new List<Vector3>();
@@ -52,6 +53,7 @@ public class Pathfinding
 
         if (startNode == null || endNode == null)
         {
+            // Debug.Log("new path broken");
             return null;
         }
 
@@ -113,6 +115,7 @@ public class Pathfinding
         }
 
         return null;
+        // return ;
 
     }
 

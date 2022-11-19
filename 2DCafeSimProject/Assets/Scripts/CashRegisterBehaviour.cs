@@ -52,7 +52,7 @@ public class CashRegisterBehaviour : MonoBehaviour
 
     private Vector2 directionVector = Vector2.zero;
 
-Vector2 offsetTransformPosition = Vector2.zero;
+    Vector2 offsetTransformPosition = Vector2.zero;
 
 
     void Start()
@@ -126,7 +126,7 @@ Vector2 offsetTransformPosition = Vector2.zero;
         Vector3Int crOffset4 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 4, 0));
         Vector3 crOffsetVec4 = map.GetCellCenterWorld(crOffset4);
 
-        path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
+                path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
 
 
         if (path != null)
@@ -139,12 +139,16 @@ Vector2 offsetTransformPosition = Vector2.zero;
             }
         }
 
-        PathEvent?.Invoke(path);
+
 
         ActionEvent?.Invoke(gameObject);
 
         if (HasBeenPlaced == true)
         {
+
+            PathEvent?.Invoke(path);
+
+
             if (rotationSelection == 0)
             {
                 // facing up
@@ -159,8 +163,9 @@ Vector2 offsetTransformPosition = Vector2.zero;
                 SetQueueColliders(+1, +1);
                 SetQueueColliders(+1, +2);
                 SetQueueColliders(+1, +3);
-                
-            } else if (rotationSelection == 1)
+
+            }
+            else if (rotationSelection == 1)
             {
                 //facing right
                 SetQueueColliders(3, 1);
@@ -174,7 +179,8 @@ Vector2 offsetTransformPosition = Vector2.zero;
                 SetQueueColliders(1, -1);
                 SetQueueColliders(2, -1);
                 SetQueueColliders(3, -1);
-            } else if (rotationSelection == 2)
+            }
+            else if (rotationSelection == 2)
             {
                 SetQueueColliders(1, -3);
                 SetQueueColliders(1, -2);
@@ -187,7 +193,8 @@ Vector2 offsetTransformPosition = Vector2.zero;
                 SetQueueColliders(-1, -1);
                 SetQueueColliders(-1, -2);
                 SetQueueColliders(-1, -3);
-            } else if (rotationSelection == 3)
+            }
+            else if (rotationSelection == 3)
             {
                 SetQueueColliders(-3, 1);
                 SetQueueColliders(-2, 1);
@@ -211,7 +218,7 @@ Vector2 offsetTransformPosition = Vector2.zero;
 
 
 
-                
+
             }
         }
         else
@@ -250,7 +257,7 @@ Vector2 offsetTransformPosition = Vector2.zero;
             {
                 spriteRenderer.sprite = FacingRightCashRegister;
                 directionVector = Vector2.left * 4f;
-                offsetTransformPosition = new Vector2(transform.position.x - 1, transform.position.y );
+                offsetTransformPosition = new Vector2(transform.position.x - 1, transform.position.y);
 
 
             }
@@ -259,7 +266,7 @@ Vector2 offsetTransformPosition = Vector2.zero;
             {
                 rotationSelection = 0;
             }
-            
+
             RaycastHit2D hit = Physics2D.Raycast(offsetTransformPosition, directionVector, 4f, layerMask);
             Debug.DrawRay(offsetTransformPosition, directionVector, Color.red);
             if (hit.collider != null)
@@ -279,7 +286,7 @@ Vector2 offsetTransformPosition = Vector2.zero;
     {
         Vector3Int crPosition = map.WorldToCell(gameObject.transform.position);
         Vector3Int newPos = new Vector3Int(crPosition.x + offsetX, crPosition.y + offsetY);
-        PathNode pathNode =  pathFinder.GetNode(newPos.x, newPos.y);
+        PathNode pathNode = pathFinder.GetNode(newPos.x, newPos.y);
         pathNode.SetIsWalkable(false);
         return pathNode;
     }
