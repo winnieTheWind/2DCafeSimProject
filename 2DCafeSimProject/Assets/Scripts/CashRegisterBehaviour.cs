@@ -14,6 +14,8 @@ public class CashRegisterBehaviour : MonoBehaviour
     public Sprite FacingLeftCashRegister;
     public GameObject prefabTransform;
 
+    [SerializeField] private GameObject rayPoint;
+
     public GameObject marker;
 
     public bool HasSpawned = false;
@@ -46,6 +48,11 @@ public class CashRegisterBehaviour : MonoBehaviour
 
     [SerializeField] private LayerMask layerMask;
 
+    private int rotationSelection = 0;
+
+    private Vector2 directionVector = Vector2.zero;
+
+Vector2 offsetTransformPosition = Vector2.zero;
 
 
     void Start()
@@ -121,6 +128,7 @@ public class CashRegisterBehaviour : MonoBehaviour
 
         path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
 
+
         if (path != null)
         {
 
@@ -137,45 +145,143 @@ public class CashRegisterBehaviour : MonoBehaviour
 
         if (HasBeenPlaced == true)
         {
-            Vector3Int crPosition = map.WorldToCell(gameObject.transform.position);
-            Vector3Int newPos = new Vector3Int(crPosition.x - 1, crPosition.y + 2);
-            Vector3Int newPos1 = new Vector3Int(crPosition.x - 1, crPosition.y + 1);
-            Vector3Int newPos2 = new Vector3Int(crPosition.x - 1, crPosition.y);
-            Vector3Int newPos3 = new Vector3Int(crPosition.x - 1, crPosition.y - 1);
-            Vector3Int newPos4 = new Vector3Int(crPosition.x, crPosition.y - 1);
-            Vector3Int newPos5 = new Vector3Int(crPosition.x + 1, crPosition.y - 1);
-            Vector3Int newPos6 = new Vector3Int(crPosition.x + 1, crPosition.y);
-            Vector3Int newPos7 = new Vector3Int(crPosition.x + 1, crPosition.y + 1);
-            Vector3Int newPos8 = new Vector3Int(crPosition.x + 1, crPosition.y + 2);
+            if (rotationSelection == 0)
+            {
+                // facing up
+                SetQueueColliders(-1, +3);
+                SetQueueColliders(-1, +2);
+                SetQueueColliders(-1, +1);
+                SetQueueColliders(-1, 0);
+                SetQueueColliders(-1, -1);
+                SetQueueColliders(0, -1);
+                SetQueueColliders(+1, -1);
+                SetQueueColliders(+1, 0);
+                SetQueueColliders(+1, +1);
+                SetQueueColliders(+1, +2);
+                SetQueueColliders(+1, +3);
+                
+            } else if (rotationSelection == 1)
+            {
+                //facing right
+                SetQueueColliders(3, 1);
+                SetQueueColliders(2, 1);
+                SetQueueColliders(1, 1);
+                SetQueueColliders(0, 1);
+                SetQueueColliders(-1, 1);
+                SetQueueColliders(-1, 0);
+                SetQueueColliders(-1, -1);
+                SetQueueColliders(0, -1);
+                SetQueueColliders(1, -1);
+                SetQueueColliders(2, -1);
+                SetQueueColliders(3, -1);
+            } else if (rotationSelection == 2)
+            {
+                SetQueueColliders(1, -3);
+                SetQueueColliders(1, -2);
+                SetQueueColliders(1, -1);
+                SetQueueColliders(1, 0);
+                SetQueueColliders(1, 1);
+                SetQueueColliders(0, 1);
+                SetQueueColliders(-1, 1);
+                SetQueueColliders(-1, 0);
+                SetQueueColliders(-1, -1);
+                SetQueueColliders(-1, -2);
+                SetQueueColliders(-1, -3);
+            } else if (rotationSelection == 3)
+            {
+                SetQueueColliders(-3, 1);
+                SetQueueColliders(-2, 1);
+                SetQueueColliders(-1, 1);
+                SetQueueColliders(0, 1);
+                SetQueueColliders(1, 1);
+                SetQueueColliders(1, 0);
+                SetQueueColliders(1, -1);
+                SetQueueColliders(0, -1);
+                SetQueueColliders(-1, -1);
+                SetQueueColliders(-2, -1);
+                SetQueueColliders(-3, -1);
 
-            Vector3Int newPos9 = new Vector3Int(crPosition.x - 1, crPosition.y + 3);
-            Vector3Int newPos10 = new Vector3Int(crPosition.x + 1, crPosition.y + 3);
 
-            pathFinder.GetNode(newPos.x, newPos.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos1.x, newPos1.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos2.x, newPos2.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos3.x, newPos3.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos4.x, newPos4.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos5.x, newPos5.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos6.x, newPos6.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos7.x, newPos7.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos8.x, newPos8.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos9.x, newPos9.y).SetIsWalkable(false);
-            pathFinder.GetNode(newPos10.x, newPos10.y).SetIsWalkable(false);
+
+
+
+
+
+
+
+
+
+                
+            }
         }
         else
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up * 4f, 4f, layerMask);
-            Debug.DrawRay(transform.position, Vector2.up * 4f, Color.red);
+
+            if (Keyboard.current.rKey.wasPressedThisFrame == true)
+            {
+                rotationSelection = rotationSelection + 1;
+            }
+
+            if (rotationSelection == 0)
+            {
+                spriteRenderer.sprite = FacingUpCashRegister;
+                directionVector = Vector2.up * 4f;
+                offsetTransformPosition = new Vector2(transform.position.x, transform.position.y + 1);
+            }
+
+            if (rotationSelection == 1)
+            {
+                spriteRenderer.sprite = FacingRightCashRegister;
+                directionVector = Vector2.right * 4f;
+
+                offsetTransformPosition = new Vector2(transform.position.x + 1, transform.position.y);
+
+
+            }
+            if (rotationSelection == 2)
+            {
+                spriteRenderer.sprite = FacingDownCashRegister;
+                directionVector = Vector2.down * 4f;
+                offsetTransformPosition = new Vector2(transform.position.x, transform.position.y - 1);
+
+
+            }
+            if (rotationSelection == 3)
+            {
+                spriteRenderer.sprite = FacingRightCashRegister;
+                directionVector = Vector2.left * 4f;
+                offsetTransformPosition = new Vector2(transform.position.x - 1, transform.position.y );
+
+
+            }
+
+            if (rotationSelection == 4)
+            {
+                rotationSelection = 0;
+            }
+            
+            RaycastHit2D hit = Physics2D.Raycast(offsetTransformPosition, directionVector, 4f, layerMask);
+            Debug.DrawRay(offsetTransformPosition, directionVector, Color.red);
             if (hit.collider != null)
             {
                 IsQueueLineColliding = true;
 
-            } else {
+            }
+            else
+            {
                 IsQueueLineColliding = false;
             }
         }
 
+    }
+
+    private PathNode SetQueueColliders(int offsetX, int offsetY)
+    {
+        Vector3Int crPosition = map.WorldToCell(gameObject.transform.position);
+        Vector3Int newPos = new Vector3Int(crPosition.x + offsetX, crPosition.y + offsetY);
+        PathNode pathNode =  pathFinder.GetNode(newPos.x, newPos.y);
+        pathNode.SetIsWalkable(false);
+        return pathNode;
     }
 
 

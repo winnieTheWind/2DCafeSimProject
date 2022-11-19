@@ -31,7 +31,8 @@ Transform:
   m_LocalPosition: {x: -0.113, y: -2.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8873157824756751684}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,13 +130,14 @@ MonoBehaviour:
   FacingRightCashRegister: {fileID: -1450503825, guid: 3318583c703078e45af021e7ae6eb304, type: 3}
   FacingDownCashRegister: {fileID: -1409251936, guid: 3318583c703078e45af021e7ae6eb304, type: 3}
   FacingLeftCashRegister: {fileID: 1500867680, guid: 3318583c703078e45af021e7ae6eb304, type: 3}
-  HasSpawned: 0
-  HasBeenPlaced: 0
   prefabTransform: {fileID: 0}
   marker: {fileID: 0}
-  map: {fileID: 0}
+  HasSpawned: 0
+  HasBeenPlaced: 0
   timerIsRunning: 0
+  IsQueueLineColliding: 0
   isCashRegisterTouchingDesk: 0
+  map: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -160,3 +162,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &7516201386572740141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8873157824756751684}
+  m_Layer: 3
+  m_Name: RayPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8873157824756751684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7516201386572740141}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.316, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8712319383924747395}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

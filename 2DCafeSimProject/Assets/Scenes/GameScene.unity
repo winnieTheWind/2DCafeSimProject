@@ -13919,7 +13919,6 @@ MonoBehaviour:
   chairToSpawn: {fileID: 2994588655844246216, guid: 5903ca721d7fdff4e94337bd0835c184, type: 3}
   metalDeskToSpawn: {fileID: 4326204691455802436, guid: baee3e5c0481bbe4ea56049d85eb8760, type: 3}
   cashRegisterToSpawn: {fileID: 5366144175305481010, guid: 94782640429c9204a95f4b5bcc0c52d3, type: 3}
-  prefabTransform: {fileID: 0}
   hasBeenPlaced: 0
   redMarker: {fileID: -438968483, guid: fd33e706182cca44a87f06e6ace42119, type: 3}
 --- !u!4 &1477207106
@@ -17017,7 +17016,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16333334
+  m_VoxelSize: 0.016666668
   m_BuildHeightMesh: 0
   m_HideEditorLogs: 0
   m_NavMeshData: {fileID: 23800000, guid: 654b115f095ad244da69b3400ee519a4, type: 2}

@@ -14,8 +14,6 @@ public class InstantiateItems : MonoBehaviour
     [SerializeField] public GameObject metalDeskToSpawn;
     [SerializeField] public GameObject cashRegisterToSpawn;
 
-    public GameObject prefabTransform;
-
     bool hasPurchased = false;
     public bool hasBeenPlaced = false;
 
@@ -63,16 +61,11 @@ public class InstantiateItems : MonoBehaviour
         panel = GameObject.Find("Canvas/Panel");
 
         InitGrid.getPathFinderAction += GetPathFinder;
-
-
-
     }
 
     void GetPathFinder(Pathfinding _pathFinder)
     {
         pathFinder = _pathFinder;
-
-
     }
 
     void GetColliderEvent(bool _isColliding)
@@ -84,9 +77,7 @@ public class InstantiateItems : MonoBehaviour
     {
         if (isCreating == true)
         {
-
-            // Debug.Log(InitGrid.pathFinder + " " + "pathfinder");
-                    BeaconBehaviour.CollidingWithWallEvent += GetColliderEvent;
+            BeaconBehaviour.CollidingWithWallEvent += GetColliderEvent;
 
             StartCreation(itemData, path);
             this.panel.SetActive(false);
@@ -94,7 +85,7 @@ public class InstantiateItems : MonoBehaviour
         else
         {
             this.panel.SetActive(true);
-                    BeaconBehaviour.CollidingWithWallEvent -= GetColliderEvent;
+            BeaconBehaviour.CollidingWithWallEvent -= GetColliderEvent;
 
         }
     }
@@ -104,12 +95,6 @@ public class InstantiateItems : MonoBehaviour
         path = _path;
 
     }
-
-    // void GetPathFinder(Pathfinding _pathFinder)
-    // {
-    //     _pathFinder = pathFinder;
-
-    // }
 
     public void GetPurchasedItems(object sender, ShopManager.PurchaseItemsEventArgs e)
     {
@@ -188,9 +173,6 @@ public class InstantiateItems : MonoBehaviour
             {
                 obj.transform.position = vec2;
             }
-                    // Debug.Log("colliding" + " " + isColliding);
-
-            // Debug.Log(BeaconBehaviour.isCollidingWithDesk);
         }
 
         if (Mouse.current.leftButton.wasPressedThisFrame == true)
@@ -215,40 +197,21 @@ public class InstantiateItems : MonoBehaviour
                     if (obj.GetComponent<CashRegisterBehaviour>().IsQueueLineColliding == false)
                     {
                         Debug.Log("placed and queue isnt colliding");
-                    } else {
+                        if (obj.GetComponent<CashRegisterBehaviour>().isCashRegisterTouchingDesk == true)
+                        {
+                            counter = counter + 1;
+
+                            if (itemData.Count > 0)
+                            {
+                                obj.GetComponent<CashRegisterBehaviour>().HasBeenPlaced = true;
+                                PlaceObject(itemData[0].name, itemData[0].quantity, itemData);
+                            }
+                        }
+                    }
+                    else
+                    {
                         Debug.Log("cannot place, queue is colliding");
                     }
-                    // if (BeaconBehaviour.isCollidingWithGround == true)
-
-                    // {
-                    // Debug.Log("clicked on ground");
-                    // if (obj.GetComponent<CashRegisterBehaviour>().isCashRegisterTouchingDesk == true)
-                    // {
-                    //     if (true)
-                    //     {
-
-                    //     }
-                    //     Debug.Log("clicked on desk");
-                    //     counter = counter + 1;
-
-                    //     if (itemData.Count > 0)
-                    //     {
-                    //         obj.GetComponent<CashRegisterBehaviour>().HasBeenPlaced = true;
-                    //         PlaceObject(itemData[0].name, itemData[0].quantity, itemData);
-                    //     }
-                    // }
-                    // }
-
-                    //         if (BeaconBehaviour.isCollidingWithDesk == false)
-                    //         {
-
-
-                    //     //     } else {
-                    //     //         // obj.GetComponent<CashRegisterBehaviour>().beaconObject.GetComponent<SpriteRenderer>().sprite = redMarker;
-                    //         }
-
-                    // }
-                    // }
                 }
             }
         }
