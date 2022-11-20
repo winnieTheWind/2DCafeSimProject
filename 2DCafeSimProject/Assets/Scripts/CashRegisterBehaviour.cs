@@ -54,6 +54,8 @@ public class CashRegisterBehaviour : MonoBehaviour
 
     Vector2 offsetTransformPosition = Vector2.zero;
 
+    Vector3Int cashRegisterWToC;
+
 
     void Start()
     {
@@ -96,48 +98,23 @@ public class CashRegisterBehaviour : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void RefreshPath()
     {
+        path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
 
     }
 
     void Update()
     {
 
-
-
-
         SetDisableTiles("Grid/Walls");
         SetDisableTiles("Grid/Background");
 
-        Vector3Int cashRegisterWToC = map.WorldToCell(new Vector2(transform.position.x, transform.position.y));
-        Vector3Int crOffset = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y - 1, 0));
-        Vector3 crOffsetVec = map.GetCellCenterWorld(crOffset);
-
-        Vector3Int crOffset1 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 1, 0));
-        Vector3 crOffsetVec1 = map.GetCellCenterWorld(crOffset1);
-
-        Vector3Int crOffset2 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 2, 0));
-        Vector3 crOffsetVec2 = map.GetCellCenterWorld(crOffset2);
-
-        Vector3Int crOffset3 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 3, 0));
-        Vector3 crOffsetVec3 = map.GetCellCenterWorld(crOffset3);
-
-        Vector3Int crOffset4 = map.WorldToCell(new Vector3(cashRegisterWToC.x, cashRegisterWToC.y + 4, 0));
-        Vector3 crOffsetVec4 = map.GetCellCenterWorld(crOffset4);
-
-                path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
+        cashRegisterWToC = map.WorldToCell(new Vector2(transform.position.x, transform.position.y));
 
 
-        if (path != null)
-        {
+            RefreshPath();
 
-
-            for (int i = 0; i < path.Count - 1; i++)
-            {
-                Debug.DrawLine(new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, path[i + 1].y + 0.5f), Color.green);
-            }
-        }
 
 
 
@@ -147,6 +124,14 @@ public class CashRegisterBehaviour : MonoBehaviour
         {
 
             PathEvent?.Invoke(path);
+
+            if (path != null)
+            {
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    Debug.DrawLine(new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, path[i + 1].y + 0.5f), Color.green);
+                }
+            }
 
 
             if (rotationSelection == 0)

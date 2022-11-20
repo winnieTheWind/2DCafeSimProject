@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.72
     agentHeight: 2
     agentSlope: 45
-    agentClimb: 0.4
+    agentClimb: 0.94
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.24000001
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -17309,7 +17309,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.016666668
+  m_VoxelSize: 0.036666665
   m_BuildHeightMesh: 0
   m_HideEditorLogs: 0
   m_NavMeshData: {fileID: 23800000, guid: 654b115f095ad244da69b3400ee519a4, type: 2}
@@ -19728,7 +19728,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 118969649}
   m_HandleRect: {fileID: 118969648}
   m_Direction: 2
-  m_Value: 1.0000002
+  m_Value: 1
   m_Size: 0.64582807
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
+using System;
 
 
 
@@ -51,6 +52,7 @@ public class InstantiateItems : MonoBehaviour
 
     private bool isColliding;
 
+
     void Start()
     {
         map = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
@@ -78,6 +80,8 @@ public class InstantiateItems : MonoBehaviour
         if (isCreating == true)
         {
             BeaconBehaviour.CollidingWithWallEvent += GetColliderEvent;
+
+            
 
             StartCreation(itemData, path);
             this.panel.SetActive(false);
@@ -173,15 +177,15 @@ public class InstantiateItems : MonoBehaviour
             {
                 obj.transform.position = vec2;
 
-                // if (Keyboard.current.eKey.wasPressedThisFrame == true)
-                // {
-                //     Debug.Log("exit placement");
-                //     // obj.gameObject.destrit
-                //     Destroy(obj);
-                //     counter = 0;
-                //     isCreating = false;
+                if (Keyboard.current.eKey.wasPressedThisFrame == true)
+                {
+                    Debug.Log("exit placement");
+                    // obj.gameObject.destrit
+                    Destroy(obj);
+                    counter = 0;
+                    isCreating = false;
 
-                // }
+                }
             }
 
 
@@ -191,11 +195,18 @@ public class InstantiateItems : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame == true)
         {
+
+            // if (path != null)
+            // {
+            // }
             if (hasObjectTouchedPath == false)
             {
                 if (itemData[0].name == "Desk" || itemData[0].name == "Chair" ||
                 itemData[0].name == "Table" || itemData[0].name == "Metal Desk")
                 {
+
+                    // refreshPathEvent?.Invoke();
+
                     counter = counter + 1;
 
                     if (itemData.Count > 0)

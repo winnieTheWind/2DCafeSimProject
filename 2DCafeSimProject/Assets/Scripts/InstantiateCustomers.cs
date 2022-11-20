@@ -26,7 +26,7 @@ public class InstantiateCustomers : MonoBehaviour
                 // incomingCustomers = false;
             // }
 
-        } else if (timeRemaining == 7650)
+        } else if (timeRemaining == 2000)
         {
             timeRemaining = 0;
         }

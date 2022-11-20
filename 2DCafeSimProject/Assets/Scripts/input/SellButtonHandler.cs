@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
+using UnityEngine.Tilemaps;
 
 public class SellButtonHandler : MonoBehaviour
 {
@@ -17,7 +19,9 @@ public class SellButtonHandler : MonoBehaviour
     public GameObject shopPanel;
     public GameObject closeButton;
 
+    Pathfinding pathFinder;
 
+    private Tilemap map;
 
 
     private int buttonCount = 0;
@@ -29,7 +33,15 @@ public class SellButtonHandler : MonoBehaviour
     private void Start()
     {
         // panel = GameObject.Find("Canvas/Panel/StatsMoneyPanel");
+        InitGrid.getPathFinderAction += GetPathFinder;
+        map = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
     }
+
+    void GetPathFinder(Pathfinding _pathFinder)
+    {
+        pathFinder = _pathFinder;
+    }
+
 
     private void Update()
     {
@@ -70,35 +82,49 @@ public class SellButtonHandler : MonoBehaviour
 
             if (hit.collider != null)
             {
+                Vector3Int vec = map.WorldToCell(new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y, 0));
+
                 // Debug.Log("Target Position: " + hit.collider.gameObject.transform.position + " " + hit.collider.name);
 
                 if (Mouse.current.leftButton.wasPressedThisFrame == true)
                 {
                     if (hit.collider.gameObject.name == "Desk(Clone)")
                     {
+                        pathFinder.GetNode(vec.x, vec.y).SetIsWalkable(true);
                         Destroy(hit.collider.gameObject);
 
-                    } else if (hit.collider.gameObject.name == "Chair(Clone)")
-                    {
-                        Destroy(hit.collider.gameObject);
 
-                    } else if (hit.collider.gameObject.name == "Table(Clone)")
+                    }
+                    else if (hit.collider.gameObject.name == "Chair(Clone)")
                     {
-                        Destroy(hit.collider.gameObject);
 
-                    } else if (hit.collider.gameObject.name == "MetalDesk(Clone)")
-                    {
+                        pathFinder.GetNode(vec.x, vec.y).SetIsWalkable(true);
                         Destroy(hit.collider.gameObject);
 
                     }
-                    
+                    else if (hit.collider.gameObject.name == "Table(Clone)")
+                    {
+
+                        pathFinder.GetNode(vec.x, vec.y).SetIsWalkable(true);
+                        Destroy(hit.collider.gameObject);
+
+                    }
+                    else if (hit.collider.gameObject.name == "MetalDesk(Clone)")
+                    {
+                        pathFinder.GetNode(vec.x, vec.y).SetIsWalkable(true);
+
+                        Destroy(hit.collider.gameObject);
+
+                    }
+
                 }
             }
         }
     }
 
-    void SellObject() {
-        
+    void SellObject()
+    {
+
     }
 
     public void SellButtonOnClick()
