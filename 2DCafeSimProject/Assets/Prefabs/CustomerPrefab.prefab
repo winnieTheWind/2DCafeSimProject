@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 4045402804323402369}
   - component: {fileID: 5022766957092109128}
   - component: {fileID: 2095928563766672552}
+  - component: {fileID: -5222453012782311153}
   m_Layer: 0
   m_Name: CustomerPrefab
-  m_TagString: Untagged
+  m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,9 +75,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 103837207
+  m_SortingLayer: 4
+  m_SortingOrder: 20
   m_Sprite: {fileID: 1888848702, guid: 867f2c7402483d244b6b15884a3151d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -106,8 +107,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
+  m_Height: 0.51
+  m_BaseOffset: 0.41
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
 --- !u!114 &4045402804323402369
@@ -171,3 +172,14 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.52686596, y: 0.8846139}
   m_EdgeRadius: 0
+--- !u!210 &-5222453012782311153
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732432219626852399}
+  m_Enabled: 1
+  m_SortingLayerID: 2076817913
+  m_SortingLayer: 3
+  m_SortingOrder: 0

@@ -54,6 +54,9 @@ public class Grid<TGridObject> {
                     debugTextArray[x, y] = Utils.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x , y) + new Vector3(cellSize, cellSize) * .5f, 3, Color.white);
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 8000f);
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 8000f);
+                    // debugTextArray[x, y].sortingLayerID = 6;
+                    // debugTextArray[x, y].sortingOrder = 1000;
+
                     // debugTextArray[x, y].font = font;
                 }
             }

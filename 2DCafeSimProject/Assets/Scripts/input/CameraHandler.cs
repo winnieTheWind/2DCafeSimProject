@@ -39,7 +39,7 @@ public class CameraHandler : MonoBehaviour
     private void FixedUpdate() {
         Vector2 force = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
         rb.AddForce(force);
-        rb.position = new Vector2(Mathf.Clamp(rb.position.x, minX, maxX), Mathf.Clamp(rb.position.y, minY, maxY));
+        // rb.position = new Vector2(Mathf.Clamp(rb.position.x, minX, maxX), Mathf.Clamp(rb.position.y, minY, maxY));
 
 
 

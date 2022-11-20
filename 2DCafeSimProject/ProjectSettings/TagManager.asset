@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Desk
   - CollideLayer
+  - Customer
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 254300299
+    locked: 0
+  - name: Ground
+    uniqueID: 1793421611
+    locked: 0
+  - name: PlacedItems
+    uniqueID: 2076817913
+    locked: 0
+  - name: Customer
+    uniqueID: 103837207
+    locked: 0
+  - name: Walls
+    uniqueID: 209779543
+    locked: 0
+  - name: DebugText
+    uniqueID: 3148815887
     locked: 0

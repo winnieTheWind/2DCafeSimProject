@@ -55,9 +55,14 @@ namespace Game.Utils
             textMesh.alignment = TextAlignmentOptions.Center;
             textMesh.text = text;
             textMesh.fontSize = fontSize;
+            // textMesh.sortingOrder = sortingOrder;
+            // textMesh.sortingLayerID = 5;
+            
             
             textMesh.color = color;
             textMesh.GetComponent<MeshRenderer>().sortingOrder = sortingOrder;
+            textMesh.GetComponent<MeshRenderer>().sortingLayerName = "DebugText";
+
             return textMesh;
         }
 
