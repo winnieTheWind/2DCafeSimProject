@@ -6,7 +6,6 @@ public class CustomerArriveState : CustomerBaseState
 {
     public override void EnterState(CustomerStateManager customer)
     {
-        Debug.Log("arrive state");
         
     }
     public override void UpdateState(CustomerStateManager customer)

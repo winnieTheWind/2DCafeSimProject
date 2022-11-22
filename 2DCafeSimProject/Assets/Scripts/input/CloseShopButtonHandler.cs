@@ -13,7 +13,7 @@ public class CloseShopButtonHandler : MonoBehaviour
     public GameObject sellButton;
 
     private void Start() {
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
     public void CloseShopButtonOnClick() {
