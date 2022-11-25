@@ -51,7 +51,7 @@ public class InstantiateObjects : MonoBehaviour
 
         HandleExecute.sendPurchaseItemsListEvent += GetPurchasedItems;
         CashRegisterBehaviour.PathEvent += GetPath;
-        InitGrid.getPathFinderAction += GetPathFinder;
+        InitGrid.getPathFinder += GetPathFinder;
     }
 
     private void OnDisable()
@@ -61,7 +61,7 @@ public class InstantiateObjects : MonoBehaviour
         HandleExecute.sendPurchaseItemsListEvent -= GetPurchasedItems;
         
         CashRegisterBehaviour.PathEvent -= GetPath;
-        InitGrid.getPathFinderAction -= GetPathFinder;
+        InitGrid.getPathFinder -= GetPathFinder;
     }
     private void Update()
     {
@@ -91,6 +91,10 @@ public class InstantiateObjects : MonoBehaviour
                 {
                     obj = Instantiate(cashRegisterToSpawn, transform.position, Quaternion.identity);
                     obj.GetComponent<CashRegisterBehaviour>().map = map;
+
+
+                    // obj.GetComponent<CashRegisterBehaviour>().map = map;
+
 
 
                     hasBeenPlaced = false;

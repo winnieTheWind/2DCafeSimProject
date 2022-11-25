@@ -33,7 +33,7 @@ public class SellButtonHandler : MonoBehaviour
     private void Start()
     {
         // panel = GameObject.Find("Canvas/Panel/StatsMoneyPanel");
-        InitGrid.getPathFinderAction += GetPathFinder;
+        InitGrid.getPathFinder += GetPathFinder;
         map = GameObject.Find("Grid/Ground").GetComponent<Tilemap>();
     }
 

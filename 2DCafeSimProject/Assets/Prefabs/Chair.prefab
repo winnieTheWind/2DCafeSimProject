@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2994588655844246213}
   - component: {fileID: 2994588655844246214}
   - component: {fileID: 2994588655844246215}
+  - component: {fileID: -3442035545720983541}
   m_Layer: 3
   m_Name: Chair
   m_TagString: Untagged
@@ -133,3 +134,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!210 &-3442035545720983541
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2994588655844246216}
+  m_Enabled: 1
+  m_SortingLayerID: 2076817913
+  m_SortingLayer: 3
+  m_SortingOrder: 0

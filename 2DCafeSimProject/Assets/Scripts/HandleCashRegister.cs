@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 
-public class CashRegisterBehaviour : MonoBehaviour
+public class HandleCashRegister : MonoBehaviour
 {
     // Start is called before the first frame update
     public Sprite FacingUpCashRegister;
@@ -26,7 +26,6 @@ public class CashRegisterBehaviour : MonoBehaviour
 
     public string isFacingDirection;
 
-
     public List<PathNode> path;
     public Tilemap map;
 
@@ -45,26 +44,26 @@ public class CashRegisterBehaviour : MonoBehaviour
     private Vector3 startPoint;
     private Vector3 endPoint;
 
+    GameObject wallTilemapObject;
+    Tilemap tilemap;
+    BoundsInt bounds;
+    TileBase[] allTiles;
 
-    public SpriteRenderer spriteRenderer;
+    SpriteRenderer spriteRenderer;
 
-    public Pathfinding pathFinder;
+    Pathfinding pathFinder;
+    Pathfinding pathFinderStart;
 
-    [SerializeField] public LayerMask layerMask;
 
-    public int rotationSelection = 0;
+    [SerializeField] private LayerMask layerMask;
 
-    public Vector2 directionVector = Vector2.zero;
+    private int rotationSelection = 0;
 
-    public Vector2 offsetTransformPosition = Vector2.zero;
+    private Vector2 directionVector = Vector2.zero;
+
+    Vector2 offsetTransformPosition = Vector2.zero;
 
     Vector3Int cashRegisterWToC;
-
-    public GameObject queueNode;
-
-    public static Action<bool> isAvailableEvent;
-
-
 
 
     void Start()
@@ -77,34 +76,20 @@ public class CashRegisterBehaviour : MonoBehaviour
         isCashRegisterTouchingDesk = false;
         timerIsRunning = true;
 
-        // pathFinder = new Pathfinding();
-
-        // Debug.Log(pathFinder);
-        // cashRegisterWToC = map.WorldToCell(new Vector2(transform.position.x, transform.position.y));
-
-        // path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
-
-        InitGrid.getPathFinder += GetPathFinder;
-
-    }
 
 
-    private void GetPathFinder(Pathfinding _pathFinder)
-    {
-        pathFinder = _pathFinder;
+
+        Debug.Log(pathFinder);
     }
 
     private void SetDisableTiles(string tileMapLayer)
     {
-        GameObject wallTilemapObject;
-        Tilemap tilemap;
-        BoundsInt bounds;
-        TileBase[] allTiles;
-
         wallTilemapObject = GameObject.Find(tileMapLayer);
         tilemap = wallTilemapObject.GetComponent<Tilemap>();
+
         bounds = tilemap.cellBounds;
         allTiles = tilemap.GetTilesBlock(bounds);
+
         for (int x = 0; x < bounds.size.x; x++)
         {
             for (int y = 0; y < bounds.size.y; y++)
@@ -116,58 +101,44 @@ public class CashRegisterBehaviour : MonoBehaviour
                 }
             }
         }
-
-
-
-
-
     }
 
-    // private void SetDisableTiles2(string tileMapLayer)
-    // {
-    //     wallTilemapObject = GameObject.Find(tileMapLayer);
-    //     tilemap = wallTilemapObject.GetComponent<Tilemap>();
+    private void RefreshPath()
+    {
 
-    //     bounds = tilemap.cellBounds;
-    //     allTiles = tilemap.GetTilesBlock(bounds);
-
-    //     for (int x = 0; x < bounds.size.x; x++)
-    //     {
-    //         for (int y = 0; y < bounds.size.y; y++)
-    //         {
-    //             TileBase tile = allTiles[x + y * bounds.size.x];
-    //             if (tile != null)
-    //             {
-    //                 pathFinder.GetNode(x, y).SetIsWalkable(false);
-    //             }
-    //         }
-    //     }
-    // }
+    }
 
     void Update()
     {
 
-
+        SetDisableTiles("Grid/Walls");
+        SetDisableTiles("Grid/Background");
 
         ActionEvent?.Invoke(gameObject);
 
 
         if (HasBeenPlaced == true)
         {
-            isAvailableEvent?.Invoke(true);
 
-            // pathFinder.GetNode
-            // PathNode pathNode = pathFinder.GetNode(newPos.x, newPos.y);
-            // pathNode.SetIsWalkable(false);
+            cashRegisterWToC = map.WorldToCell(new Vector2(transform.position.x, transform.position.y));
+            path = pathFinder.FindPath(cashRegisterWToC.x, cashRegisterWToC.y, 6, 27);
 
-            SetDisableTiles("Grid/Walls");
-            SetDisableTiles("Grid/Background");
 
+            if (path != null)
+            {
+
+                PathEvent?.Invoke(path);
+
+
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    Debug.DrawLine(new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, path[i + 1].y + 0.5f), Color.green);
+                }
+            }
 
             if (rotationSelection == 0)
             {
                 isFacingDirection = "UP";
-
                 SetQueueColliders(-1, +2);
                 SetQueueColliders(-1, +1);
                 SetQueueColliders(-1, 0);
@@ -177,11 +148,12 @@ public class CashRegisterBehaviour : MonoBehaviour
                 SetQueueColliders(+1, 0);
                 SetQueueColliders(+1, +1);
                 SetQueueColliders(+1, +2);
-            }
 
-            if (rotationSelection == 1)
+            }
+            else if (rotationSelection == 1)
             {
                 isFacingDirection = "RIGHT";
+
                 SetQueueColliders(2, 1);
                 SetQueueColliders(1, 1);
                 SetQueueColliders(0, 1);
@@ -192,11 +164,10 @@ public class CashRegisterBehaviour : MonoBehaviour
                 SetQueueColliders(1, -1);
                 SetQueueColliders(2, -1);
             }
-
-
-            if (rotationSelection == 2)
+            else if (rotationSelection == 2)
             {
-                // isFacingDirection = "DOWN";
+                isFacingDirection = "DOWN";
+
                 SetQueueColliders(1, -2);
                 SetQueueColliders(1, -1);
                 SetQueueColliders(1, 0);
@@ -207,9 +178,10 @@ public class CashRegisterBehaviour : MonoBehaviour
                 SetQueueColliders(-1, -1);
                 SetQueueColliders(-1, -2);
             }
-            if (rotationSelection == 3)
+            else if (rotationSelection == 3)
             {
-                // isFacingDirection = "LEFT";
+                isFacingDirection = "LEFT";
+
                 SetQueueColliders(-2, 1);
                 SetQueueColliders(-1, 1);
                 SetQueueColliders(0, 1);
@@ -220,22 +192,10 @@ public class CashRegisterBehaviour : MonoBehaviour
                 SetQueueColliders(-1, -1);
                 SetQueueColliders(-2, -1);
             }
-
-            Vector3Int cashRegisterXY = map.WorldToCell(new Vector2(transform.position.x, transform.position.y));
-            path = pathFinder.FindPath(cashRegisterXY.x, cashRegisterXY.y, 6, 27);
-
-            if (path != null)
-            {
-                for (int i = 0; i < path.Count - 1; i++)
-                {
-                    // Instantiate(queueNode, new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), Quaternion.identity);
-                    Debug.DrawLine(new Vector3(path[i].x + 0.5f, path[i].y + 0.5f), new Vector3(path[i + 1].x + 0.5f, path[i + 1].y + 0.5f), Color.green);
-                }
-
-            }
         }
         else
         {
+
             if (Keyboard.current.rKey.wasPressedThisFrame == true)
             {
                 rotationSelection = rotationSelection + 1;
@@ -247,18 +207,23 @@ public class CashRegisterBehaviour : MonoBehaviour
                 directionVector = Vector2.up * 4f;
                 offsetTransformPosition = new Vector2(transform.position.x, transform.position.y + 1);
             }
+
             if (rotationSelection == 1)
             {
                 spriteRenderer.sprite = FacingRightCashRegister;
                 directionVector = Vector2.right * 4f;
 
                 offsetTransformPosition = new Vector2(transform.position.x + 1, transform.position.y);
+
+
             }
             if (rotationSelection == 2)
             {
                 spriteRenderer.sprite = FacingDownCashRegister;
                 directionVector = Vector2.down * 4f;
                 offsetTransformPosition = new Vector2(transform.position.x, transform.position.y - 1);
+
+
             }
             if (rotationSelection == 3)
             {

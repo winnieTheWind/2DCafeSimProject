@@ -23,11 +23,15 @@ public class CustomerBehaviour : MonoBehaviour
     public GameObject cashRegisterObj;
 
 
-    public int yIndex;
-    public int xIndex;
+    public int index;
+    // public int xIndex;
 
-    
 
+    public GameObject[] firstList;
+    public List<GameObject> finalList;
+
+    public int numberOfCashRegisters;
+    public int customerindex;
 
 
     private void OnEnable()
@@ -49,9 +53,6 @@ public class CustomerBehaviour : MonoBehaviour
 
         target = GameObject.Find("CustomerSpawner").transform.position;
     }
-    void Update()
-    {
-    }
     public void setTarget(Vector3 vec)
     {
         target = vec;
@@ -60,8 +61,15 @@ public class CustomerBehaviour : MonoBehaviour
     {
         float offsetY = 0.7f;
         agent.SetDestination(new Vector3(target.x, target.y + offsetY, transform.position.z));
-
     }
+
+    public void ResetPath()
+    {
+        agent.ResetPath();
+        // float offsetY = 0.7f;
+        // agent.SetDestination(new Vector3(target.x, target.y + offsetY, transform.position.z));
+    }
+
 
     void ActionCall(GameObject obj)
     {

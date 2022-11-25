@@ -11,38 +11,39 @@ public class InstantiateCustomers : MonoBehaviour
     private bool incomingCustomers = true;
     private int amountOfCustomers = 0;
     public int indexQueue = -1;
+
     void Update()
     {
         timeRemaining = timeRemaining + 1;
         if (timeRemaining == 20)
         {
-            // if (incomingCustomers == true)
-            // {
+            // incomingCustomers = true;
+            if (incomingCustomers)
+            {
                 amountOfCustomers = amountOfCustomers + 1;
                 SpawnCustomers();
-            // }
-            // if (amountOfCustomers >= 13)
-            // {
-                // incomingCustomers = false;
-            // }
-
-        } else if (timeRemaining == 2000)
+            }
+        }
+        else if (timeRemaining == 1500)
         {
             timeRemaining = 0;
         }
 
-        // if (timeRemaining == 5500)
-        // {
-            // timeRemaining = 0;
-        // }
+
+
+        if (amountOfCustomers == 25)
+        {
+            incomingCustomers = false;
+        }
     }
+
     void SpawnCustomers()
     {
         indexQueue = indexQueue + 1;
         GameObject prefabTransform = Instantiate(entityToSpawn, transform.position, Quaternion.identity);
         prefabTransform.GetComponent<CustomerBehaviour>().map = map;
         prefabTransform.GetComponent<CustomerBehaviour>().vec = map.GetCellCenterWorld(new Vector3Int(7, 17 + indexQueue));
-        prefabTransform.GetComponent<CustomerBehaviour>().yIndex = indexQueue;
+        prefabTransform.GetComponent<CustomerBehaviour>().customerindex = indexQueue;
     }
 }
 

@@ -49,7 +49,7 @@ public class PlaceObjectHandler : MonoBehaviour
                     if (itemData.Count > 0)
                     {
                         Vector3Int vecToWorld = map.WorldToCell(new Vector3(obj.transform.position.x, obj.transform.position.y, 0));
-                        pathFinder.GetNode(vecToWorld.x, vecToWorld.y).SetIsWalkable(false);
+                        // pathFinder.GetNode(vecToWorld.x, vecToWorld.y).SetIsWalkable(false);
 
                         PlaceObject(itemData[0].name, itemData[0].quantity, itemData);
                     }

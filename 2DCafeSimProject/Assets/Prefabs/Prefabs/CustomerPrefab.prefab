@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8083853815705830597}
   - component: {fileID: 4045402804323402369}
   - component: {fileID: 5022766957092109128}
+  - component: {fileID: 2772302807976159931}
   - component: {fileID: 2095928563766672552}
   - component: {fileID: -5222453012782311153}
   m_Layer: 0
@@ -118,7 +119,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6732432219626852399}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f39cfe779e9a734d9fc15a0bc16827f, type: 3}
   m_Name: 
@@ -132,9 +133,24 @@ MonoBehaviour:
   vec: {x: 0, y: 0, z: 0}
   customer: {fileID: 0}
   cashRegisterObj: {fileID: 0}
-  yIndex: 0
-  xIndex: 0
+  index: 0
+  firstList: []
+  finalList: []
+  numberOfCashRegisters: 0
+  customerindex: 0
 --- !u!114 &5022766957092109128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732432219626852399}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd299583dce6da46b61a6a1db617c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2772302807976159931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,9 +159,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6732432219626852399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dd299583dce6da46b61a6a1db617c09, type: 3}
+  m_Script: {fileID: 11500000, guid: df220c10a4dd2e8489e002929f928b7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 0}
 --- !u!61 &2095928563766672552
 BoxCollider2D:
   m_ObjectHideFlags: 0

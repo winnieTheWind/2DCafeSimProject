@@ -6,47 +6,43 @@ using UnityEngine.Tilemaps;
 public class CustomerCashRegisterState : CustomerBaseState
 {
 
-    private CustomerBehaviour customerBehaviour;
-    private GameObject cashRegisterObject;
+    public int queueNumber;
+    List<PathNode> path;
 
-    private CashRegisterBehaviour crBehaviour;
-
-    // int index = 0;
     public override void EnterState(CustomerStateManager customer)
     {
+        CustomerBehaviour customerBehaviour = customer.GetComponent<CustomerBehaviour>();
+
+        GameObject[] firstList = GameObject.FindObjectsOfType<GameObject>();
+        List<GameObject> finalList = new List<GameObject>();
+        string nameToLookFor = "CashRegister(Clone)";
+
+        for (var i = 0; i < firstList.Length; i++)
+        {
+            if (firstList[i].gameObject.name == nameToLookFor)
+            {
+                finalList.Add(firstList[i]);
+            }
+        }
+
+        int selected = Random.Range(0, finalList.Count);
+
+        customerBehaviour.cashRegisterObj = finalList[selected];
+
+        CashRegisterBehaviour cashRegBehaviour = customerBehaviour.cashRegisterObj.GetComponent<CashRegisterBehaviour>();
+
+        if (cashRegBehaviour.path != null)
+        {
+            cashRegBehaviour.customerQueue.Add(customer.gameObject);
+
+            for (int i = 0; i < cashRegBehaviour.customerQueue.Count; i++)
+            {
+                customerBehaviour.setTarget(new Vector3(cashRegBehaviour.path[i + 2].x + 0.5f, cashRegBehaviour.path[i + 2].y + 0.5f));
+                customerBehaviour.SetAgentPosition();
+            }
+        }
     }
     public override void UpdateState(CustomerStateManager customer)
     {
-        customerBehaviour = customer.GetComponent<CustomerBehaviour>();
-        cashRegisterObject = customer.GetComponent<CustomerBehaviour>().cashRegisterObj;
-        if (cashRegisterObject != null)
-        {
-            crBehaviour = cashRegisterObject.GetComponent<CashRegisterBehaviour>();
-
-            if (crBehaviour.path != null)
-            {
-
-                Vector3Int pathTiles = new Vector3Int(crBehaviour.path[customerBehaviour.yIndex + 2].x, crBehaviour.path[customerBehaviour.yIndex + 2].y, 0);
-                // {
-                Vector3 tileToWorld = customerBehaviour.map.CellToWorld(pathTiles);
-
-                Vector3 crPosition = tileToWorld;
-                Vector3Int crWToC = customerBehaviour.map.WorldToCell(crPosition);
-
-                Vector3Int offsetted = new Vector3Int(crWToC.x, crWToC.y);
-
-                Vector3 centerCashRegisterObj = customerBehaviour.map.GetCellCenterWorld(offsetted);
-
-                customerBehaviour.setTarget(centerCashRegisterObj);
-                customerBehaviour.SetAgentPosition();
-
-            }
-
-        }
-        else
-        {
-            return;
-        }
-
     }
 }
